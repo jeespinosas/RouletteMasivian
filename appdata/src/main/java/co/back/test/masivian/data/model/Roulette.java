@@ -1,12 +1,18 @@
-package co.back.test.masivian.common.dto;
+package co.back.test.masivian.data.model;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RouletteDTO {
+import co.back.test.masivian.common.dto.BetDTO;
 
-	@JsonProperty("id")
+@RedisHash("Roulette")
+public class Roulette {
+
+	@Id
 	private Long id;
 	
 	@JsonProperty("state")
@@ -37,5 +43,5 @@ public class RouletteDTO {
 
 	public void setBets(List<BetDTO> bets) {
 		this.bets = bets;
-	}
+	}	
 }
