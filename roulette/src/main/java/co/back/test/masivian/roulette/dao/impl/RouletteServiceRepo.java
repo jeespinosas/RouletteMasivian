@@ -60,7 +60,6 @@ public class RouletteServiceRepo implements IRouletteServiceRepo {
 	@Override
 	public Response wagerNumberOrColor(BetDTO bet, Long idRoulette) {
 		Response response = new Response();
-		System.out.println(idRoulette);
 		Optional<Roulette> roulette = repository.findById(idRoulette);
 		if (roulette.isPresent()) {
 			Roulette rouletteEntity = roulette.get();
@@ -87,12 +86,12 @@ public class RouletteServiceRepo implements IRouletteServiceRepo {
 		Optional<Roulette> roulette = repository.findById(idRoulette);
 		RouletteDTO rouletteDTO = new RouletteDTO();
 		RouletteMapper mapper = new RouletteMapper();
-		int winningNumber = (int) (Math.random() * 36);
-		String winningColor = selectColor(winningNumber);
 		List<BetDTO> bets = new ArrayList<>();
 		if (roulette.isPresent()) {
 			Roulette rouletteEntity = roulette.get();
 			for (BetDTO bet : rouletteEntity.getBets()) {
+				int winningNumber = (int) (Math.random() * 36);
+				String winningColor = selectColor(winningNumber);
 				bets.add(validatePrice(bet, winningColor, winningNumber));
 			}
 			rouletteEntity.setState(ConstanstUtil.CLOSED);

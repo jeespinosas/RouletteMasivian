@@ -58,8 +58,8 @@ public class RouletteController implements IRouletteController{
 	}
 
 	@Override
-	@PutMapping(ConstanstUtil.CLOSE_ROULETTE + "/{id}")
-	public ResponseEntity<RouletteDTO> closeRoulette(Long idRoulette) {
+	@PutMapping(ConstanstUtil.CLOSE_ROULETTE + "/{idRoulette}")
+	public ResponseEntity<RouletteDTO> closeRoulette(@PathVariable Long idRoulette) {
 		
 		return ResponseEntity.ok(service.closeRoulette(idRoulette));
 	}
