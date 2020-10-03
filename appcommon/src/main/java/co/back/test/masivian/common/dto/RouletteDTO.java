@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RouletteDTO {
 
 	@JsonProperty("id")
-	private Long id;
+	private Long idRoulette;
 	
 	@JsonProperty("state")
 	private String state;
@@ -15,12 +15,12 @@ public class RouletteDTO {
 	@JsonProperty("bets")
 	private List<BetDTO> bets;
 
-	public Long getId() {
-		return id;
+	public Long getIdRoulette() {
+		return idRoulette;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdRoulette(Long idRoulette) {
+		this.idRoulette = idRoulette;
 	}
 
 	public String getState() {
