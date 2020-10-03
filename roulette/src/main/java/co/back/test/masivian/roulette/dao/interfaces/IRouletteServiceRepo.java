@@ -5,14 +5,15 @@ import java.util.List;
 import co.back.test.masivian.roulette.dto.BetDTO;
 import co.back.test.masivian.roulette.dto.RouletteDTO;
 import co.back.test.masivian.roulette.model.Roulette;
+import co.back.test.masivian.roulette.util.Response;
 
 public interface IRouletteServiceRepo {
 
-	public Long createRoulette();
+	public Response createRoulette();
 	
-	public Roulette openRoulette(Long idRoulette);
+	public Response openRoulette(Long idRoulette);
 	
-	public Roulette wagerNumberOrColor(BetDTO bet, Long idUser);
+	public Response wagerNumberOrColor(BetDTO bet, Long idRoulette);
 	
 	public Roulette closeRoulette(Long idRoulette);
 	

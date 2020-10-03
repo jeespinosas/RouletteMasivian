@@ -44,5 +44,9 @@ public class Roulette {
 
 	public void setBets(List<BetDTO> bets) {
 		this.bets = bets;
-	}	
+	}
+	
+	public void setOneBet(BetDTO bet) {
+		this.bets.add(bet);
+	}
 }

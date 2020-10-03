@@ -1,16 +1,23 @@
 package co.back.test.masivian.roulette.controller.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.back.test.masivian.roulette.controller.interfaces.IRouletteController;
 import co.back.test.masivian.roulette.dao.interfaces.IRouletteServiceRepo;
 import co.back.test.masivian.roulette.dto.BetDTO;
+import co.back.test.masivian.roulette.dto.RouletteDTO;
 import co.back.test.masivian.roulette.util.ConstanstUtil;
 import co.back.test.masivian.roulette.util.Response;
 
@@ -22,36 +29,62 @@ public class RouletteController implements IRouletteController{
 	private IRouletteServiceRepo service;
 	
 	@Override
-	@PostMapping(ConstanstUtil.POST_CREATE_ROULETTE)
+	@PostMapping(ConstanstUtil.CREATE_ROULETTE)
 	public ResponseEntity<Response> createRoulette() {
-		Response response = new Response(HttpStatus.CREATED, ConstanstUtil.MESSAGE_CREATED);
-		response.addPayload("idRoulette", service.createRoulette());
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
+		
+		return ResponseEntity.ok(service.createRoulette());
 	}
 
 	@Override
-	public ResponseEntity<Response> openRoulette(Long idRoulette) {
-		// TODO Auto-generated method stub
-		return null;
+	@PutMapping(ConstanstUtil.OPEN_ROULETTE + "/{idRoulette}")
+	public ResponseEntity<Response> openRoulette(@PathVariable Long idRoulette) {
+		
+		return ResponseEntity.ok(service.openRoulette(idRoulette));
 	}
 
 	@Override
-	public ResponseEntity<Response> wagerNumberOrColor(BetDTO bet, Long idUser) {
-		// TODO Auto-generated method stub
-		return null;
+	@PutMapping(ConstanstUtil.WAGER + "/{idRoulette}")
+	public ResponseEntity<Response> wagerNumberOrColor(@RequestBody BetDTO bet,
+			@RequestHeader Long idUser,@PathVariable Long idRoulette) {		
+		if(idUser != null && bet != null && validBetAmount(bet) 
+				&& (validBetValueColor(bet) || validBetValueNumber(bet))) {
+			bet.setIdUser(idUser);
+			return ResponseEntity.ok(service.wagerNumberOrColor(bet, idRoulette));
+		}
+		Response response = new Response();
+		response.setStatus(HttpStatus.BAD_REQUEST.toString());
+		return ResponseEntity.ok(response);
 	}
 
 	@Override
 	public ResponseEntity<Response> closeRoulette(Long idRoulette) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	@GetMapping(ConstanstUtil.GET_ROULETTES)
-	public ResponseEntity<Response> getAllRoulettes() {
-		Response response = new Response(HttpStatus.OK, ConstanstUtil.OK);
-		response.addPayload("roulettes", service.getAllRoulettes());
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	public ResponseEntity<List<RouletteDTO>> getAllRoulettes() {
+		return ResponseEntity.ok(service.getAllRoulettes());
+	}
+	
+	private boolean validBetAmount(BetDTO bet) {
+		return (bet.getUserAmount() > 0 && bet.getUserAmount() < 10000);
+	}
+
+	private boolean validBetValueColor(BetDTO bet) {
+		return (bet.getBetValue().equals(ConstanstUtil.RED_COLOR)
+				|| bet.getBetValue().equals(ConstanstUtil.BLACK_COLOR));
+	}
+
+	private boolean validBetValueNumber(BetDTO bet) {
+		try {
+			Integer betValue = Integer.parseInt(bet.getBetValue());
+			
+			return (betValue >= 0 && betValue <= 36);
+		} catch (Exception e) {
+			
+			return false;
+		}
 	}
 }

@@ -1,24 +1,10 @@
 package co.back.test.masivian.roulette.util;
 
-import java.util.HashMap;
-
-import org.springframework.http.HttpStatus;
-
 public class Response {
 
 	private String status;
 	private String message;
-	private HashMap<String, Object> payload;
-	
-	public Response(HttpStatus status, String message) {
-		this.status = status.toString();
-		this.message = message;
-		this.payload = new HashMap<>();
-	}
-
-	public void addPayload(String key, Object value) {
-		this.payload.put(key, value);
-	}
+	private String infoMessage;
 	
 	public String getStatus() {
 		return status;
@@ -35,12 +21,12 @@ public class Response {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	public HashMap<String, Object> getPayload() {
-		return payload;
+	
+	public String getInfoMessage() {
+		return infoMessage;
 	}
 
-	public void setPayload(HashMap<String, Object> payload) {
-		this.payload = payload;
+	public void setInfoMessage(String infoMessage) {
+		this.infoMessage = infoMessage;
 	}
 }
