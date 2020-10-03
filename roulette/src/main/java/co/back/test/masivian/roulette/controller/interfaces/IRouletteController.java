@@ -14,9 +14,9 @@ public interface IRouletteController {
 	
 	public ResponseEntity<Response> openRoulette(Long idRoulette);
 	
-	public ResponseEntity<Response> wagerNumberOrColor(BetDTO bet, Long idUser, Long Roulette);
+	public ResponseEntity<Response> wagerNumberOrColor(BetDTO bet, String username, Long Roulette);
 	
-	public ResponseEntity<Response> closeRoulette(Long idRoulette);
+	public ResponseEntity<RouletteDTO> closeRoulette(Long idRoulette);
 	
 	public ResponseEntity<List<RouletteDTO>> getAllRoulettes();
 }

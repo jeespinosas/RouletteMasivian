@@ -14,6 +14,9 @@ public class RouletteDTO {
 	
 	@JsonProperty("bets")
 	private List<BetDTO> bets;
+	
+	@JsonProperty("result")
+	private Integer result;
 
 	public Long getIdRoulette() {
 		return idRoulette;
@@ -37,5 +40,13 @@ public class RouletteDTO {
 
 	public void setBets(List<BetDTO> bets) {
 		this.bets = bets;
+	}
+
+	public Integer getResult() {
+		return result;
+	}
+
+	public void setResult(Integer result) {
+		this.result = result;
 	}
 }

@@ -45,26 +45,29 @@ public class RouletteController implements IRouletteController{
 	@Override
 	@PutMapping(ConstanstUtil.WAGER + "/{idRoulette}")
 	public ResponseEntity<Response> wagerNumberOrColor(@RequestBody BetDTO bet,
-			@RequestHeader Long idUser,@PathVariable Long idRoulette) {		
-		if(idUser != null && bet != null && validBetAmount(bet) 
+			@RequestHeader(value = "username") String username, @PathVariable Long idRoulette) {		
+		if(username != null && bet != null && validBetAmount(bet) 
 				&& (validBetValueColor(bet) || validBetValueNumber(bet))) {
-			bet.setIdUser(idUser);
+			bet.setIdUser(username);
 			return ResponseEntity.ok(service.wagerNumberOrColor(bet, idRoulette));
 		}
 		Response response = new Response();
 		response.setStatus(HttpStatus.BAD_REQUEST.toString());
+		
 		return ResponseEntity.ok(response);
 	}
 
 	@Override
-	public ResponseEntity<Response> closeRoulette(Long idRoulette) {
+	@PutMapping(ConstanstUtil.CLOSE_ROULETTE + "/{id}")
+	public ResponseEntity<RouletteDTO> closeRoulette(Long idRoulette) {
 		
-		return null;
+		return ResponseEntity.ok(service.closeRoulette(idRoulette));
 	}
 
 	@Override
 	@GetMapping(ConstanstUtil.GET_ROULETTES)
 	public ResponseEntity<List<RouletteDTO>> getAllRoulettes() {
+		
 		return ResponseEntity.ok(service.getAllRoulettes());
 	}
 	

@@ -1,5 +1,6 @@
 package co.back.test.masivian.roulette.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -22,6 +23,10 @@ public class Roulette {
 	@JsonProperty("bets")
 	private List<BetDTO> bets;
 
+	public Roulette() {
+		this.bets = new ArrayList<>();
+	}
+	
 	public Long getIdRoulette() {
 		return idRoulette;
 	}

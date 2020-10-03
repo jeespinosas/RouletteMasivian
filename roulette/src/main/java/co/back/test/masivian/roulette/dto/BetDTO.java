@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class BetDTO {
 
 	@JsonProperty("idUser")
-	private Long idUser;
+	private String username;
 	
 	@JsonProperty("betValue")
 	private String betValue;
@@ -15,13 +15,16 @@ public class BetDTO {
 	
 	@JsonProperty("betResult")
 	private String betResult;
+	
+	@JsonProperty("resultAmount")
+	private Double resultAmount;
 
-	public Long getIdUser() {
-		return idUser;
+	public String getIdUser() {
+		return username;
 	}
 
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
+	public void setIdUser(String username) {
+		this.username = username;
 	}
 
 	public String getBetValue() {
@@ -46,5 +49,13 @@ public class BetDTO {
 
 	public void setBetResult(String betResult) {
 		this.betResult = betResult;
+	}
+
+	public Double getResultAmount() {
+		return resultAmount;
+	}
+
+	public void setResultAmount(Double resultAmount) {
+		this.resultAmount = resultAmount;
 	}
 }
